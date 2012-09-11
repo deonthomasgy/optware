@@ -11,7 +11,7 @@ OPT_ROOT=0
 
 for mount in `df -h | awk 'BEGIN { FS =" " } ; { print $6 }'`
 do
-    if [ "$mount" == "/opt/etc/profile" ]; then
+    if [ "$mount" == "/rom/etc/profile" ]; then
         OPT_PROFILE=1
         logger OPT_PROFILE = $OPT_PROFILE
     fi
