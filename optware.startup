@@ -1,0 +1,12 @@
+#!/bin/sh
+
+unset LD_LIBRARY_PATH
+unset LD_PRELOAD
+
+[ -e /opt/etc/profile ] && mount -o bind /opt/etc/profile /etc/profile
+
+if [ -d /opt/etc/init.d ]; then
+  for f in /opt/etc/init.d/S* ; do
+      [ -x $f ] && $f start
+  done
+fi 
