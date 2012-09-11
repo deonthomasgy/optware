@@ -8,7 +8,7 @@ unset LD_PRELOAD
 [ -e /tmp/home/root/.ssh/authorized_keys ] && cp /tmp/home/root/.ssh/authorized_keys /tmp
 [ -d /opt/home/root ] && mount -o bind /opt/home/root /tmp/home/root
 [ ! -d /opt/home/root/.ssh ] && mkdir -p /opt/home/root/.ssh
-[ -e /tmp/authorized_keys ] && mv /tmp/authorized_keys /opt/home/root.ssh/
+[ -e /tmp/authorized_keys ] && mv /tmp/authorized_keys /opt/home/root/.ssh/
 
 if [ -d /opt/etc/init.d ]; then
     for f in /opt/etc/init.d/S* ; do
