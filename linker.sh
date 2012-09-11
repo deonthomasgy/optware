@@ -10,7 +10,7 @@ FILES="\
 
 for l in `echo $FILES`
 do
-    [ -e "/opt/optware/$l" ] && rm /opt/optware/$l
+    [ -e "/opt/$l" ] && rm /opt/$l
     ln -s /opt/optware/$l /opt/$l
 done
 
