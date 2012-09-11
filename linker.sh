@@ -11,3 +11,7 @@ for l in `echo $FILES`
 do
     ln -s /opt/optware/$l /opt/$l
 done
+
+#autorun at startup
+ln -s /opt/optware/optware.startup /opt/.autorun
+
