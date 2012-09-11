@@ -1,12 +1,40 @@
 #!/bin/sh
+logger "Initializing optware.startup"
 
 unset LD_LIBRARY_PATH
 unset LD_PRELOAD
+unset OPT_PROFILE
+unset OPT_ROOT
+
+OPT_PROFILE=0
+OPT_ROOT=0
+
+for mount in `df -h | awk 'BEGIN { FS =" " } ; { print $6 }'`
+do
+    if [ "$mount" == "/opt/etc/profile" ]; then
+        OPT_PROFILE=1
+        logger OPT_PROFILE = $OPT_PROFILE
+    fi
+
+    if [ "$mount" == "/tmp/home/root" ]; then
+        OPT_ROOT=1
+        logger OPT_ROOT = $OPT_ROOT
+    fi
+done
+
 
 [ ! -d /opt/home/root ] && mkdir -p /opt/home/root
-[ -e /opt/etc/profile ] && mount -o bind /opt/etc/profile /etc/profile
+
+if [ -e /opt/etc/profile && $OPT_PROFILE == 0 ]; then
+    mount -o bind /opt/etc/profile /etc/profile
+fi
+
 [ -e /tmp/home/root/.ssh/authorized_keys ] && cp /tmp/home/root/.ssh/authorized_keys /tmp
-[ -d /opt/home/root ] && mount -o bind /opt/home/root /tmp/home/root
+
+if [ -d /opt/home/root && $OPT_ROOT == 0 ]; then
+   mount -o bind /opt/home/root /tmp/home/root
+fi
+
 [ ! -d /opt/home/root/.ssh ] && mkdir -p /opt/home/root/.ssh
 [ -e /tmp/authorized_keys ] && mv /tmp/authorized_keys /opt/home/root/.ssh/
 
