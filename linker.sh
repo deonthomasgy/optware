@@ -9,5 +9,5 @@ FILES="\
 
 for l in `echo $FILES`
 do
-    echo ln -s /opt/optware/$l /opt/$l
+    ln -s /opt/optware/$l /opt/$l
 done
