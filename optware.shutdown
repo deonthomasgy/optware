@@ -4,9 +4,11 @@ unset LD_LIBRARY_PATH
 unset LD_PRELOAD
 
 [ -e /opt/etc/profile ] && umount /etc/profile
+[ -d /opt/home/root ] && umount /tmp/home/root
 
 if [ -d /opt/etc/init.d ]; then
-  for f in /opt/etc/init.d/K* ; do
-      [ -x $f ] && $f stop
-  done
-fi 
+    for f in /opt/etc/init.d/K* ; do
+        [ -x $f ] && $f stop
+    done
+fi
+
