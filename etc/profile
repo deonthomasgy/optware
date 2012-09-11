@@ -1,0 +1,15 @@
+export PATH=/opt/bin:/opt/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+export PS1='\u@\h:\w\$ '
+
+[ -x /opt/bin/less ] ||  alias less=more
+[ -x /opt/bin/vim ] ||  alias vim=vi
+
+
+arp() { cat /proc/net/arp; }
+ldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }
+reboot() {
+    /opt/optware.shutdown 
+    sleep 3
+    umount /opt
+    /sbin/reboot 
+}
