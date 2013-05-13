@@ -2,14 +2,24 @@
 # This script download all the latest software from filehippo.com
 # by PrinceAMD
 
-CURL="/opt/bin/curl -s"
-WGET="/opt/bin/wget -c "
+CURL=""
+WGET=""
+
+if [ -f "/etc/debian_version" ];
+then
+    CURL="/usr/bin/curl -s --connect-timeout 10"
+    WGET="/usr/bin/wget -c --tries 3 --timeout 15"
+else
+    CURL="/opt/bin/curl -s --connect-timeout 10"
+    WGET="/opt/bin/wget -c --tries 3 --timeout 15"
+fi
+
 FOLDER_LIST=""
 
 _filehippo_get_folders()
 {
     local run
-    run=$($CURL http://filehippo.com/ |tr " " "\n" |tr "\"" "\n" |grep "/software/" |uniq |tr "\n" " ")
+    run=$($CURL http://filehippo.com/ |tr " " "\n" |tr "\"" "\n" |grep "/software/" |uniq |sed -e "s/\/software\///g"| sed -e "s/\///g"|sort |sed -e "s/^/\/software\//g"|sed -e "s/$/\//g" |tr "\n" " ")
     echo $run
 }
 
