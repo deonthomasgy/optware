@@ -1,30 +1,30 @@
-#!/opt/bin/bash
+#!/bin/sh
 # This script download all the latest software from filehippo.com
 # by PrinceAMD
 
 CURL="/opt/bin/curl -s"
-WGET="/usr/bin/wget -c "
+WGET="/opt/bin/wget -c "
 FOLDER_LIST=""
 
-function _filehippo_get_folders()
+_filehippo_get_folders()
 {
     local run
     run=$($CURL http://filehippo.com/ |tr " " "\n" |tr "\"" "\n" |grep "/software/" |uniq |tr "\n" " ")
     echo $run
 }
 
-function _filehippo_create_folders()
+_filehippo_create_folders()
 {
     for folder in $FOLDER_LIST
     do
-        if [[ ! -d ".$folder" ]];
+        if [ ! -d ".$folder" ];
         then
             mkdir -p ".$folder"
         fi
     done
 }
 
-function _filehippo_get_contents()
+_filehippo_get_contents()
 {
     local soft=$1
     local run
@@ -32,7 +32,7 @@ function _filehippo_get_contents()
     echo $run
 }
 
-function _filehippo_get_content_name()
+_filehippo_get_content_name()
 {
     local cont=$1
     local run
@@ -40,7 +40,7 @@ function _filehippo_get_content_name()
     echo "$run.exe"
 }
 
-function _filehippo_get_content_url_inner()
+_filehippo_get_content_url_inner()
 {
     local cont=$1
     local run
@@ -48,7 +48,7 @@ function _filehippo_get_content_url_inner()
     echo $run
 }
 
-function _filehippo_get_content_url()
+_filehippo_get_content_url()
 {
     local cont=$1
     local run
@@ -56,7 +56,7 @@ function _filehippo_get_content_url()
     echo $(_filehippo_get_content_url_inner $run)
 }
 
-function _filehippo_download_software_file()
+_filehippo_download_software_file()
 {
     local name=$1
     local link=$2
@@ -67,7 +67,7 @@ function _filehippo_download_software_file()
     echo $run
 }
 
-function _filehippo_download_software()
+_filehippo_download_software()
 {
     for software in $FOLDER_LIST
     do
@@ -87,7 +87,7 @@ function _filehippo_download_software()
 
             #echo "Software Path: $path"
 
-            if [[ ! -d "$path" ]];
+            if [ ! -d "$path" ];
             then
                 mkdir -p $path
             fi
